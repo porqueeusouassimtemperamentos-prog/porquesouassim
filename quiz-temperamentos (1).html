@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Por Que Você É Assim? — Descubra seu Temperamento</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #C8842A;
+    --amber-light: #E8A84A;
+    --terra: #8B3A2A;
+    --terra-light: #C4614A;
+    --sand: #F5ECD7;
+    --sand-dark: #E8D8B8;
+    --ink: #2A1F14;
+    --ink-soft: #5A4A38;
+    --cream: #FBF6ED;
+    --s-color: #C8842A;
+    --c-color: #8B3A2A;
+    --m-color: #4A6B8A;
+    --f-color: #5A7A5A;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: 
+      radial-gradient(ellipse at 20% 20%, rgba(200,132,42,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,58,42,0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .header h1 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  .header p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, var(--amber), var(--terra-light));
+    margin: 24px auto;
+    border-radius: 2px;
+  }
+
+  /* PROGRESS */
+  .progress-wrap {
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .progress-count {
+    font-size: 12px;
+    color: var(--amber);
+    font-weight: 500;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: var(--sand-dark);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--amber), var(--terra-light));
+    border-radius: 3px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 36px;
+    box-shadow: 0 4px 40px rgba(42,31,20,0.08), 0 1px 4px rgba(42,31,20,0.04);
+    margin-bottom: 20px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .question-num {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 3vw, 1.35rem);
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 20px;
+    border: 1.5px solid var(--sand-dark);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    background: var(--cream);
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    width: 100%;
+  }
+
+  .option:hover {
+    border-color: var(--amber);
+    background: white;
+    color: var(--ink);
+    transform: translateX(4px);
+    box-shadow: 0 2px 12px rgba(200,132,42,0.12);
+  }
+
+  .option.selected {
+    border-color: var(--amber);
+    background: linear-gradient(135deg, rgba(200,132,42,0.06), rgba(139,58,42,0.04));
+    color: var(--ink);
+  }
+
+  .option-letter {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--sand-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: all 0.25s ease;
+    margin-top: 1px;
+  }
+
+  .option:hover .option-letter,
+  .option.selected .option-letter {
+    background: var(--amber);
+    color: white;
+  }
+
+  /* NAV BUTTONS */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+    letter-spacing: 0.5px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    color: white;
+    box-shadow: 0 4px 20px rgba(200,132,42,0.3);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(200,132,42,0.4);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1.5px solid var(--sand-dark);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--ink-soft);
+    color: var(--ink);
+  }
+
+  /* RESULT */
+  .result-card {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 36px;
+    box-shadow: 0 4px 40px rgba(42,31,20,0.08);
+    text-align: center;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .result-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .result-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+    animation: pop 0.5s 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  .result-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .result-subtitle {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+
+  .result-desc {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+    text-align: left;
+  }
+
+  .traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 36px;
+  }
+
+  .trait {
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--sand);
+    color: var(--ink-soft);
+  }
+
+  .result-cta-box {
+    background: var(--sand);
+    border-radius: 16px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+  }
+
+  .result-cta-box p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+
+  .result-cta-box strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .btn-cta {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    color: white;
+    border-radius: 100px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 6px 24px rgba(200,132,42,0.35);
+    transition: all 0.25s ease;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(200,132,42,0.45);
+  }
+
+  .result-restart {
+    font-size: 13px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+  }
+
+  .result-restart:hover { opacity: 1; }
+
+  /* Score bars */
+  .scores {
+    margin: 28px 0;
+    text-align: left;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .score-name {
+    width: 90px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+
+  .score-bar-wrap {
+    flex: 1;
+    height: 6px;
+    background: var(--sand-dark);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 1s 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+
+  .score-pct {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    width: 32px;
+    text-align: right;
+  }
+
+  /* INTRO */
+  .intro-card {
+    background: white;
+    border-radius: 20px;
+    padding: 48px 36px;
+    box-shadow: 0 4px 40px rgba(42,31,20,0.08);
+    text-align: center;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .intro-card .big-icon {
+    font-size: 56px;
+    display: block;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .intro-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .intro-card p {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+
+  .intro-tags {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+
+  .intro-tag {
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1.5px solid var(--sand-dark);
+    color: var(--ink-soft);
+  }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.5); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @media (max-width: 480px) {
+    .question-card, .result-card, .intro-card { padding: 28px 20px; }
+    .nav { flex-direction: column-reverse; gap: 12px; }
+    .btn { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <span class="eyebrow">Teste de Temperamento</span>
+    <h1>Por Que Você<br><em>É Assim?</em></h1>
+    <div class="divider"></div>
+    <p>Responda com sinceridade — não existe certo ou errado. Escolha a opção que mais combina com você de verdade, não com quem você quer ser.</p>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro-card" id="intro">
+    <span class="big-icon">🔍</span>
+    <h2>12 perguntas. Uma revelação.</h2>
+    <p>Este teste identifica seu temperamento dominante entre os quatro tipos clássicos. Leva menos de 3 minutos e vai te surpreender.</p>
+    <div class="intro-tags">
+      <span class="intro-tag">⚡ 3 minutos</span>
+      <span class="intro-tag">🎯 12 perguntas</span>
+      <span class="intro-tag">✨ Resultado instantâneo</span>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">Começar o Teste →</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="hidden" id="quiz-section">
+    <div class="progress-wrap">
+      <div class="progress-info">
+        <span class="progress-label">Progresso</span>
+        <span class="progress-count" id="progress-count">1 de 12</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="question-card">
+      <div class="question-num" id="q-num">Pergunta 1</div>
+      <div class="question-text" id="q-text"></div>
+      <div class="options" id="q-options"></div>
+    </div>
+
+    <div class="nav">
+      <button class="btn btn-ghost" id="btn-back" onclick="prevQuestion()">← Voltar</button>
+      <button class="btn btn-primary" id="btn-next" onclick="nextQuestion()" disabled>Próxima →</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div class="hidden" id="result-section">
+    <div class="result-card">
+      <div class="result-badge" id="r-badge"></div>
+      <span class="result-icon" id="r-icon"></span>
+      <div class="result-title" id="r-title"></div>
+      <div class="result-subtitle" id="r-subtitle"></div>
+      <div class="divider"></div>
+      <p class="result-desc" id="r-desc"></p>
+      <div class="traits" id="r-traits"></div>
+
+      <div class="scores" id="r-scores"></div>
+
+      <div class="result-cta-box">
+        <p>Quer entender mais fundo <strong>por que você age assim</strong> — nos relacionamentos, no trabalho, sob pressão? O e-book completo vai muito além deste teste.</p>
+        <a href="https://pay.kiwify.com.br/cKai4B2" class="btn-cta" target="_blank">Quero o E-book Completo →</a>
+      </div>
+
+      <button class="result-restart" onclick="restartQuiz()">Refazer o teste</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  {
+    text: "Você está numa reunião que está indo para o caminho errado. O que você faz?",
+    options: [
+      { text: "Tomo a palavra, redireciono a conversa e proponho uma solução.", type: "C" },
+      { text: "Animo todo mundo e sugiro algo diferente com leveza.", type: "S" },
+      { text: "Observo com cuidado antes de falar, querendo ter certeza do que vou dizer.", type: "M" },
+      { text: "Aguardo o momento certo, sem querer criar conflito desnecessário.", type: "F" }
+    ]
+  },
+  {
+    text: "Um amigo te convida de última hora para uma festa grande. Você não tinha planos. O que acontece dentro de você?",
+    options: [
+      { text: "Topei antes de ele terminar a frase — adoro isso!", type: "S" },
+      { text: "Fico irritado com a falta de aviso, mas avalio se vale a pena ir.", type: "C" },
+      { text: "Sinto um certo desconforto — eu preferia ter me preparado.", type: "M" },
+      { text: "Não me importo muito, vou se todo mundo for. Tanto faz.", type: "F" }
+    ]
+  },
+  {
+    text: "Quando você comete um erro no trabalho, sua reação mais natural é:",
+    options: [
+      { text: "Assumir rápido, resolver e seguir em frente.", type: "C" },
+      { text: "Contar pra alguém, rir um pouco e já superar.", type: "S" },
+      { text: "Analisar o que deu errado com cuidado para não repetir.", type: "M" },
+      { text: "Sentir um desconforto, mas não fazer muito alarde.", type: "F" }
+    ]
+  },
+  {
+    text: "Como você se comporta quando está sob pressão real?",
+    options: [
+      { text: "Fico mais focado, acelerado e até um pouco dominador.", type: "C" },
+      { text: "Começo a falar mais, brincar, tentar aliviar a tensão.", type: "S" },
+      { text: "Fico quieto, introvertido e começo a analisar tudo demais.", type: "M" },
+      { text: "Mantenho a calma, espero passar — me recuso a entrar em pânico.", type: "F" }
+    ]
+  },
+  {
+    text: "Seus amigos te descreveriam como:",
+    options: [
+      { text: "Animado, falante, cheio de energia e às vezes exagerado.", type: "S" },
+      { text: "Determinado, direto, líder nato — às vezes difícil.", type: "C" },
+      { text: "Sensível, reflexivo, perfeccionista e um pouco dramático.", type: "M" },
+      { text: "Calmo, estável, paciente e às vezes preguiçoso.", type: "F" }
+    ]
+  },
+  {
+    text: "Na hora de tomar uma decisão importante, você:",
+    options: [
+      { text: "Decide rápido, confio nos meus instintos.", type: "C" },
+      { text: "Pesquiso tudo, listo prós e contras até me sentir seguro.", type: "M" },
+      { text: "Pergunto a opinião de pessoas próximas e vejo o que me anima mais.", type: "S" },
+      { text: "Deixo as coisas se acomodarem — evito pressão desnecessária.", type: "F" }
+    ]
+  },
+  {
+    text: "Quando alguém te magoa, sua reação mais honesta é:",
+    options: [
+      { text: "Falo na hora, claramente, às vezes mais agressivo do que deveria.", type: "C" },
+      { text: "Finjo que tá tudo bem, mas fico magoado por dentro por muito tempo.", type: "M" },
+      { text: "Fico chateado por um tempo, mas esqueço rápido e sigo em frente.", type: "S" },
+      { text: "Prefiro evitar o conflito, engulo o sapo e espero passar.", type: "F" }
+    ]
+  },
+  {
+    text: "No seu tempo livre, o que você mais gosta de fazer?",
+    options: [
+      { text: "Estar com pessoas, sair, conversar, conhecer gente nova.", type: "S" },
+      { text: "Trabalhar em projetos pessoais, alcançar metas, me sentir produtivo.", type: "C" },
+      { text: "Ter tempo de qualidade sozinho, ler, pensar, criar.", type: "M" },
+      { text: "Descansar, assistir séries, ficar em casa sem compromisso.", type: "F" }
+    ]
+  },
+  {
+    text: "Como você age quando está liderando um grupo?",
+    options: [
+      { text: "Tomo frente naturalmente, delego e cobro resultados.", type: "C" },
+      { text: "Motivo o grupo, crio um clima bom e todo mundo me acompanha.", type: "S" },
+      { text: "Planejo tudo nos mínimos detalhes antes de agir.", type: "M" },
+      { text: "Prefiro apoiar do que liderar, mas sou confiável e estável.", type: "F" }
+    ]
+  },
+  {
+    text: "Em uma discussão intensa, você tende a:",
+    options: [
+      { text: "Falar alto, ser direto e às vezes não deixar o outro terminar.", type: "C" },
+      { text: "Tentar desanuviar, contar uma história engraçada ou mudar o assunto.", type: "S" },
+      { text: "Ficar quieto e remoer tudo internamente depois.", type: "M" },
+      { text: "Ceder logo só para acabar logo — você odeia conflito.", type: "F" }
+    ]
+  },
+  {
+    text: "Qual dessas frases mais combina com você?",
+    options: [
+      { text: "\"Eu sei o que quero e vou atrás — simples assim.\"", type: "C" },
+      { text: "\"A vida é boa demais para ficar preso em problemas.\"", type: "S" },
+      { text: "\"Quero fazer as coisas certas, não apenas rápido.\"", type: "M" },
+      { text: "\"Prefiro paz a qualquer vitória que gere confusão.\"", type: "F" }
+    ]
+  },
+  {
+    text: "Quando você planeja uma viagem com amigos, você é quem:",
+    options: [
+      { text: "Anima todo mundo, sugere o destino mais maluco e lidera o grupo.", type: "S" },
+      { text: "Organiza tudo: passagem, hotel, roteiro, plano B.", type: "C" },
+      { text: "Pesquisa cada detalhe, avalia avaliações e quer ter certeza de tudo.", type: "M" },
+      { text: "Não liga muito pro planejamento — vai junto seja onde for.", type: "F" }
+    ]
+  }
+];
+
+const results = {
+  S: {
+    title: "Sanguíneo",
+    subtitle: "O Animador",
+    icon: "☀️",
+    color: "#C8842A",
+    badgeBg: "rgba(200,132,42,0.1)",
+    badgeColor: "#C8842A",
+    desc: "Você é energia pura. Entra num ambiente e muda o clima — as pessoas te procuram porque do seu lado a vida fica mais leve. Você vive o presente com intensidade, ama pessoas e odeia solidão. O desafio? Às vezes dispersa, começa muita coisa e acaba pouca. Mas ninguém anima uma sala como você.",
+    traits: ["Comunicativo", "Entusiasta", "Espontâneo", "Criativo", "Sociável", "Impulsivo"]
+  },
+  C: {
+    title: "Colérico",
+    subtitle: "O Realizador",
+    icon: "🔥",
+    color: "#8B3A2A",
+    badgeBg: "rgba(139,58,42,0.1)",
+    badgeColor: "#8B3A2A",
+    desc: "Você nasceu para agir. Enquanto outros ainda estão pensando, você já decidiu, começou e está cobrando resultado. Liderança é natural pra você — mesmo quando ninguém pediu. O desafio é a paciência com quem não tem seu ritmo, e às vezes ouvir mais antes de falar.",
+    traits: ["Determinado", "Líder", "Direto", "Produtivo", "Corajoso", "Impaciente"]
+  },
+  M: {
+    title: "Melancólico",
+    subtitle: "O Analista",
+    icon: "🌙",
+    color: "#4A6B8A",
+    badgeBg: "rgba(74,107,138,0.1)",
+    badgeColor: "#4A6B8A",
+    desc: "Você sente e pensa com uma profundidade que poucos têm. Percebe detalhes que ninguém viu, é sensível ao que está errado e busca perfeição em tudo que faz. O mundo precisa de pessoas como você — que fazem as coisas com cuidado. O desafio é não deixar a autocrítica te paralisar.",
+    traits: ["Analítico", "Perfeccionista", "Sensível", "Criativo", "Detalhista", "Autocrítico"]
+  },
+  F: {
+    title: "Fleumático",
+    subtitle: "O Pacificador",
+    icon: "🌊",
+    color: "#5A7A5A",
+    badgeBg: "rgba(90,122,90,0.1)",
+    badgeColor: "#5A7A5A",
+    desc: "Você é a pedra no meio da correnteza — tudo ao redor pode estar caindo, e você mantém a calma. Tem uma estabilidade rara, é confiável, diplomático e sabe ouvir de verdade. O desafio é sair da zona de conforto quando a vida pede movimento. Você tem mais força do que costuma mostrar.",
+    traits: ["Calmo", "Estável", "Diplomático", "Confiável", "Paciente", "Acomodado"]
+  }
+};
+
+const typeNames = { S: "Sanguíneo", C: "Colérico", M: "Melancólico", F: "Fleumático" };
+const typeColors = { S: "#C8842A", C: "#8B3A2A", M: "#4A6B8A", F: "#5A7A5A" };
+
+let current = 0;
+let answers = new Array(questions.length).fill(null);
+let selectedOption = null;
+
+function startQuiz() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz-section').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[current];
+  document.getElementById('q-num').textContent = `Pergunta ${current + 1}`;
+  document.getElementById('q-text').textContent = q.text;
+  document.getElementById('progress-count').textContent = `${current + 1} de ${questions.length}`;
+  document.getElementById('progress-fill').style.width = `${((current) / questions.length) * 100}%`;
+
+  const letters = ['A', 'B', 'C', 'D'];
+  const opts = document.getElementById('q-options');
+  opts.innerHTML = '';
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option' + (answers[current] === opt.type ? ' selected' : '');
+    btn.innerHTML = `<span class="option-letter">${letters[i]}</span><span>${opt.text}</span>`;
+    btn.onclick = () => selectOption(opt.type, btn);
+    opts.appendChild(btn);
+  });
+
+  document.getElementById('btn-next').disabled = answers[current] === null;
+  document.getElementById('btn-back').style.visibility = current === 0 ? 'hidden' : 'visible';
+
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'fadeUp 0.4s ease both';
+
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = current === questions.length - 1 ? 'Ver Resultado ✨' : 'Próxima →';
+}
+
+function selectOption(type, btn) {
+  document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  btn.classList.add('selected');
+  answers[current] = type;
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) {
+    current++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (current > 0) { current--; renderQuestion(); }
+}
+
+function showResult() {
+  document.getElementById('quiz-section').classList.add('hidden');
+  document.getElementById('result-section').classList.remove('hidden');
+
+  const counts = { S: 0, C: 0, M: 0, F: 0 };
+  answers.forEach(a => { if (a) counts[a]++; });
+
+  const dominant = Object.entries(counts).sort((a,b) => b[1]-a[1])[0][0];
+  const r = results[dominant];
+  const total = questions.length;
+
+  document.getElementById('r-badge').style.background = r.badgeBg;
+  document.getElementById('r-badge').style.color = r.badgeColor;
+  document.getElementById('r-badge').innerHTML = `✦ Seu temperamento dominante`;
+  document.getElementById('r-icon').textContent = r.icon;
+  document.getElementById('r-title').textContent = r.title;
+  document.getElementById('r-title').style.color = r.color;
+  document.getElementById('r-subtitle').textContent = r.subtitle;
+  document.getElementById('r-desc').textContent = r.desc;
+
+  const traitsEl = document.getElementById('r-traits');
+  traitsEl.innerHTML = r.traits.map(t => `<span class="trait">${t}</span>`).join('');
+
+  // Score bars
+  const scoresEl = document.getElementById('r-scores');
+  scoresEl.innerHTML = `<p style="font-size:12px;color:var(--ink-soft);margin-bottom:14px;letter-spacing:1px;text-transform:uppercase;">Distribuição do seu perfil</p>`;
+  const order = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+  order.forEach(([type, count]) => {
+    const pct = Math.round((count / total) * 100);
+    const row = document.createElement('div');
+    row.className = 'score-row';
+    row.innerHTML = `
+      <span class="score-name">${typeNames[type]}</span>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" style="background:${typeColors[type]};width:0%" data-width="${pct}%"></div>
+      </div>
+      <span class="score-pct">${pct}%</span>
+    `;
+    scoresEl.appendChild(row);
+  });
+
+  setTimeout(() => {
+    document.querySelectorAll('.score-bar-fill').forEach(bar => {
+      bar.style.width = bar.dataset.width;
+    });
+  }, 100);
+
+  document.getElementById('progress-fill').style.width = '100%';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function restartQuiz() {
+  current = 0;
+  answers = new Array(questions.length).fill(null);
+  document.getElementById('result-section').classList.add('hidden');
+  document.getElementById('quiz-section').classList.remove('hidden');
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
