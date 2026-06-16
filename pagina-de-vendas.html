@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Por Que Você É Assim? — Descubra seu Temperamento</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #C8842A;
+    --amber-light: #E8A84A;
+    --terra: #8B3A2A;
+    --terra-light: #C4614A;
+    --sand: #F5ECD7;
+    --sand-dark: #E8D8B8;
+    --ink: #2A1F14;
+    --ink-soft: #5A4A38;
+    --cream: #FBF6ED;
+    --white: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    background-image: radial-gradient(ellipse at 30% 50%, rgba(200,132,42,0.15) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 20%, rgba(139,58,42,0.12) 0%, transparent 50%);
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 60px,
+      rgba(200,132,42,0.03) 60px, rgba(200,132,42,0.03) 61px
+    );
+  }
+
+  .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 8vw, 4.2rem);
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--amber-light);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: rgba(255,255,255,0.65);
+    margin: 20px auto 36px;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  .hero-cta-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+  .btn-hero {
+    display: inline-block;
+    padding: 18px 48px;
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    color: white;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(200,132,42,0.4);
+    transition: all 0.3s ease;
+    letter-spacing: 0.3px;
+  }
+  .btn-hero:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,132,42,0.5); }
+
+  .hero-price {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.5px;
+  }
+
+  .hero-price strong { color: rgba(255,255,255,0.8); font-size: 15px; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 72px 24px; }
+  .container { max-width: 680px; margin: 0 auto; }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--amber);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    line-height: 1.2;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .divider {
+    width: 50px; height: 2px;
+    background: linear-gradient(to right, var(--amber), var(--terra-light));
+    border-radius: 2px;
+    margin: 16px auto 40px;
+  }
+
+  /* ── DOR ── */
+  .pain { background: var(--white); }
+
+  .pain-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px; }
+
+  .pain-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 20px;
+    background: var(--cream);
+    border-radius: 12px;
+    border-left: 3px solid var(--terra-light);
+  }
+
+  .pain-item .icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+  .pain-item p { font-size: 14px; line-height: 1.65; color: var(--ink-soft); }
+  .pain-item p strong { color: var(--ink); }
+
+  .pain-bridge {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--ink-soft);
+    padding: 24px;
+    border-top: 1px solid var(--sand-dark);
+    margin-top: 8px;
+  }
+
+  /* ── TIPOS ── */
+  .tipos { background: var(--cream); }
+
+  .tipos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .tipo-card {
+    border-radius: 16px;
+    padding: 24px 20px;
+    text-align: center;
+    color: white;
+  }
+
+  .tipo-card .tipo-sym { font-size: 28px; margin-bottom: 10px; display: block; }
+  .tipo-card .tipo-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 4px; }
+  .tipo-card .tipo-sub { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; opacity: 0.75; margin-bottom: 12px; }
+  .tipo-card .tipo-desc { font-size: 13px; line-height: 1.6; opacity: 0.9; }
+
+  .s-card { background: linear-gradient(135deg, #C8842A, #E8A84A); }
+  .c-card { background: linear-gradient(135deg, #8B3A2A, #C4614A); }
+  .m-card { background: linear-gradient(135deg, #4A6B8A, #6A8FAA); }
+  .f-card { background: linear-gradient(135deg, #5A7A5A, #7A9A7A); }
+
+  /* ── O QUE VOCÊ VAI APRENDER ── */
+  .aprende { background: var(--white); }
+
+  .aprende-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .aprende-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 16px 18px;
+    border: 1.5px solid var(--sand-dark);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .aprende-item:hover { border-color: var(--amber); }
+
+  .aprende-item .check {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 11px; color: white; font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .aprende-item p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+  .aprende-item p strong { color: var(--ink); }
+
+  /* ── CONTEÚDO ── */
+  .conteudo { background: var(--sand); }
+
+  .chapters { display: flex; flex-direction: column; gap: 10px; }
+
+  .chapter-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(42,31,20,0.05);
+  }
+
+  .chapter-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--sand-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--ink-soft);
+    flex-shrink: 0;
+  }
+
+  .chapter-info .chapter-title-sm { font-size: 13px; font-weight: 600; color: var(--ink); }
+  .chapter-info .chapter-desc { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* ── PARA QUEM ── */
+  .paraquem { background: var(--white); }
+
+  .paraquem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .paraquem-item {
+    padding: 18px;
+    background: var(--cream);
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .paraquem-item .paraquem-icon { font-size: 22px; margin-bottom: 8px; display: block; }
+  .paraquem-item strong { color: var(--ink); display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* ── CTA FINAL ── */
+  .cta-final {
+    background: var(--ink);
+    background-image: radial-gradient(ellipse at 20% 50%, rgba(200,132,42,0.12) 0%, transparent 60%);
+    padding: 80px 24px;
+    text-align: center;
+  }
+
+  .cta-final .section-title { color: white; }
+  .cta-final .section-title em { color: var(--amber-light); font-style: italic; }
+
+  .cta-box {
+    max-width: 480px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,132,42,0.3);
+    border-radius: 20px;
+    padding: 40px 32px;
+  }
+
+  .cta-price-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+  .cta-price { font-family: 'Playfair Display', serif; font-size: 3rem; color: white; margin-bottom: 4px; }
+  .cta-price span { font-size: 1.4rem; vertical-align: super; font-family: 'DM Sans', sans-serif; }
+  .cta-price-desc { font-size: 13px; color: rgba(255,255,255,0.45); margin-bottom: 28px; }
+
+  .btn-cta-final {
+    display: block;
+    padding: 18px 40px;
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    color: white;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 8px 32px rgba(200,132,42,0.35);
+    transition: all 0.3s ease;
+    margin-bottom: 14px;
+  }
+  .btn-cta-final:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(200,132,42,0.5); }
+
+  .cta-guarantee { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+  /* ── ORDER BUMP ── */
+  .ob-section {
+    background: #1a1008;
+    padding: 0 24px 80px;
+  }
+
+  .ob-box {
+    max-width: 680px;
+    margin: 0 auto;
+    border: 2px dashed rgba(200,132,42,0.5);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    background: rgba(200,132,42,0.04);
+  }
+
+  .ob-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  .ob-inner { display: flex; gap: 20px; align-items: flex-start; }
+
+  .ob-cover {
+    flex-shrink: 0;
+    width: 80px; height: 110px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #E8906A, #C46A5A);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 4px 4px 16px rgba(0,0,0,0.3);
+  }
+
+  .ob-cover span { font-family: 'Playfair Display', serif; font-size: 11px; color: white; text-align: center; padding: 8px; line-height: 1.4; }
+
+  .ob-content { flex: 1; }
+
+  .ob-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; margin-bottom: 6px; }
+  .ob-title em { font-style: italic; color: var(--amber-light); }
+
+  .ob-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.65; margin-bottom: 14px; }
+
+  .ob-price-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+  .ob-original { font-size: 13px; color: rgba(255,255,255,0.3); text-decoration: line-through; }
+  .ob-new { font-size: 20px; font-weight: 700; color: var(--amber-light); font-family: 'Playfair Display', serif; }
+  .ob-tag { font-size: 11px; background: rgba(200,132,42,0.2); color: var(--amber-light); padding: 3px 10px; border-radius: 100px; font-weight: 500; }
+
+  .ob-checkbox-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid rgba(200,132,42,0.2);
+  }
+
+  .ob-checkbox {
+    width: 20px; height: 20px; border-radius: 4px;
+    border: 2px solid var(--amber);
+    background: transparent; cursor: pointer;
+    flex-shrink: 0; margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .ob-checkbox.checked { background: var(--amber); }
+  .ob-checkbox.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; }
+
+  .ob-checkbox-label { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; cursor: pointer; }
+  .ob-checkbox-label strong { color: white; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 32px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.25); line-height: 1.8; }
+
+  /* ── STICKY CTA (mobile) ── */
+  .sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--ink);
+    border-top: 1px solid rgba(200,132,42,0.3);
+    padding: 12px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.4s ease;
+  }
+  .sticky-cta.visible { transform: translateY(0); }
+  .sticky-cta .sticky-label { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .sticky-cta .sticky-label strong { color: white; display: block; }
+  .sticky-cta a {
+    flex-shrink: 0;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--amber), var(--terra-light));
+    color: white; border-radius: 100px;
+    font-size: 13px; font-weight: 600; text-decoration: none;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 560px) {
+    .tipos-grid { grid-template-columns: 1fr; }
+    .paraquem-grid { grid-template-columns: 1fr; }
+    .ob-inner { flex-direction: column; }
+    .ob-cover { width: 100%; height: 80px; }
+  }
+</style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R8W1HCN6R5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R8W1HCN6R5');
+</script>
+</head>
+<body>
+
+<!-- ── HERO ─────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">✦ E-book de Autoconhecimento</span>
+    <h1>Por Que Você<br><em>É Assim?</em></h1>
+    <p class="hero-sub">Descubra seu temperamento, entenda por que você reage do jeito que reage — e pare de lutar contra quem você é.</p>
+    <div class="hero-cta-wrap">
+      <a href="https://pay.kiwify.com.br/VYlYxCI" class="btn-hero">🔓 Quero minha análise completa — R$ 9,00</a>
+      <span class="hero-price">Acesso imediato · PDF completo · Leitura em menos de 1 hora</span>
+      <a href="quiz-temperamentos.html" style="font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;margin-top:4px;">Não sabe seu tipo? Faça o teste gratuito primeiro →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── DOR ───────────────────────────────────────────────── -->
+<section class="pain">
+  <div class="container">
+    <span class="eyebrow">Você já se perguntou...</span>
+    <h2 class="section-title">Por que você age assim<br>mesmo não querendo?</h2>
+    <div class="divider"></div>
+
+    <div class="pain-list">
+      <div class="pain-item">
+        <span class="icon">😤</span>
+        <p><strong>Por que você explode em situações que outras pessoas nem ligam?</strong> Ou ao contrário — por que você engole tudo e não consegue falar o que sente?</p>
+      </div>
+      <div class="pain-item">
+        <span class="icon">🔄</span>
+        <p><strong>Por que você começa mil coisas e não termina nenhuma?</strong> Ou por que precisa planejar cada detalhe antes de dar um passo?</p>
+      </div>
+      <div class="pain-item">
+        <span class="icon">😶</span>
+        <p><strong>Por que certas pessoas te esgotam só de existir</strong> — e outras você simplesmente não entende como funcionam?</p>
+      </div>
+      <div class="pain-item">
+        <span class="icon">🔁</span>
+        <p><strong>Por que você repete os mesmos padrões</strong> nos relacionamentos, no trabalho, sob pressão — mesmo já sabendo que não funcionam?</p>
+      </div>
+    </div>
+
+    <p class="pain-bridge">A resposta não está nos seus traumas.<br>Está no seu temperamento.</p>
+  </div>
+</section>
+
+<!-- ── PROVA SOCIAL ────────────────────────────────────────── -->
+<section style="background:var(--sand-dark);padding:32px 24px;text-align:center;">
+  <div class="container">
+    <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:20px;font-weight:500;">O que dizem quem já leu</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;max-width:720px;margin:0 auto;">
+      <div style="background:var(--cream);border-radius:14px;padding:16px;text-align:left;">
+        <p style="font-size:13px;line-height:1.7;color:var(--ink-soft);margin-bottom:10px;">"Finalmente entendi por que me irrito com certas pessoas. Nunca vi algo tão simples e tão certeiro."</p>
+        <p style="font-size:12px;font-weight:600;color:var(--amber);">— Camila R.</p>
+      </div>
+      <div style="background:var(--cream);border-radius:14px;padding:16px;text-align:left;">
+        <p style="font-size:13px;line-height:1.7;color:var(--ink-soft);margin-bottom:10px;">"Li de uma vez. Me reconheci em cada página. Mandei para meu marido e ele leu também."</p>
+        <p style="font-size:12px;font-weight:600;color:var(--amber);">— Fernanda M.</p>
+      </div>
+      <div style="background:var(--cream);border-radius:14px;padding:16px;text-align:left;">
+        <p style="font-size:13px;line-height:1.7;color:var(--ink-soft);margin-bottom:10px;">"Por R$ 9 é um absurdo. Parece que alguém finalmente me entendeu de verdade."</p>
+        <p style="font-size:12px;font-weight:600;color:var(--amber);">— Lucas T.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── OS 4 TIPOS ─────────────────────────────────────────── -->
+<section class="tipos">
+  <div class="container">
+    <span class="eyebrow">Os 4 Temperamentos</span>
+    <h2 class="section-title">Qual desses é você?</h2>
+    <div class="divider"></div>
+
+    <div class="tipos-grid">
+      <div class="tipo-card s-card">
+        <span class="tipo-sym">✦</span>
+        <div class="tipo-name">Sanguíneo</div>
+        <div class="tipo-sub">O Animador</div>
+        <p class="tipo-desc">Energia alta, sociável, espontâneo. Vive no presente e anima qualquer ambiente.</p>
+      </div>
+      <div class="tipo-card c-card">
+        <span class="tipo-sym">★</span>
+        <div class="tipo-name">Colérico</div>
+        <div class="tipo-sub">O Realizador</div>
+        <p class="tipo-desc">Determinado, direto, orientado a resultados. Nasceu para liderar e agir.</p>
+      </div>
+      <div class="tipo-card m-card">
+        <span class="tipo-sym">◆</span>
+        <div class="tipo-name">Melancólico</div>
+        <div class="tipo-sub">O Analista</div>
+        <p class="tipo-desc">Profundo, sensível, perfeccionista. Sente e pensa com uma intensidade rara.</p>
+      </div>
+      <div class="tipo-card f-card">
+        <span class="tipo-sym">〜</span>
+        <div class="tipo-name">Fleumático</div>
+        <div class="tipo-sub">O Pacificador</div>
+        <p class="tipo-desc">Calmo, estável, diplomático. A rocha que não se move na tempestade.</p>
+      </div>
+    </div>
+
+    <p style="text-align:center; margin-top:28px; font-size:14px; color:var(--ink-soft); line-height:1.7;">
+      Você vai se reconhecer em mais de um — isso é normal.<br>
+      O e-book explica como identificar o seu <strong>temperamento dominante</strong><br>e o que fazer com essa informação.
+    </p>
+  </div>
+</section>
+
+<!-- ── O QUE VOCÊ VAI APRENDER ───────────────────────────── -->
+<section class="aprende">
+  <div class="container">
+    <span class="eyebrow">O que está no e-book</span>
+    <h2 class="section-title">Tudo que você vai descobrir</h2>
+    <div class="divider"></div>
+
+    <div class="aprende-list">
+      <div class="aprende-item">
+        <div class="check">✓</div>
+        <p><strong>Por que você reage do jeito que reage</strong> — nos relacionamentos, no trabalho e especialmente sob pressão.</p>
+      </div>
+      <div class="aprende-item">
+        <div class="check">✓</div>
+        <p><strong>Quais são seus pontos fortes reais</strong> — não os que você gostaria de ter, mas os que já estão em você.</p>
+      </div>
+      <div class="aprende-item">
+        <div class="check">✓</div>
+        <p><strong>Seus pontos cegos</strong> — os padrões que sabotam você sem que perceba.</p>
+      </div>
+      <div class="aprende-item">
+        <div class="check">✓</div>
+        <p><strong>Como conviver melhor com pessoas de outros temperamentos</strong> — chefe, parceiro, amigos, família.</p>
+      </div>
+      <div class="aprende-item">
+        <div class="check">✓</div>
+        <p><strong>O que os temperamentos mistos significam</strong> — porque quase ninguém é um tipo puro.</p>
+      </div>
+      <div class="aprende-item">
+        <div class="check">✓</div>
+        <p><strong>Um teste rápido completo</strong> para identificar seu temperamento dominante — sem achismo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTEÚDO ───────────────────────────────────────────── -->
+<section class="conteudo">
+  <div class="container">
+    <span class="eyebrow">Sumário</span>
+    <h2 class="section-title">O que tem dentro</h2>
+    <div class="divider"></div>
+
+    <div class="chapters">
+      <div class="chapter-row">
+        <div class="chapter-num">1</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">Introdução — Por que isso ainda importa?</div>
+          <div class="chapter-desc">A origem dos temperamentos e por que eles continuam fazendo sentido</div>
+        </div>
+      </div>
+      <div class="chapter-row">
+        <div class="chapter-num">2</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">Como funciona — Os 4 tipos</div>
+          <div class="chapter-desc">A lógica por trás dos temperamentos explicada de forma simples</div>
+        </div>
+      </div>
+      <div class="chapter-row" style="border-left: 3px solid #C8842A;">
+        <div class="chapter-num" style="background:#C8842A; color:white;">3</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">☀ Sanguíneo — O Animador</div>
+          <div class="chapter-desc">Perfil completo, forças, pontos cegos e caminho de crescimento</div>
+        </div>
+      </div>
+      <div class="chapter-row" style="border-left: 3px solid #8B3A2A;">
+        <div class="chapter-num" style="background:#8B3A2A; color:white;">4</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">★ Colérico — O Realizador</div>
+          <div class="chapter-desc">Perfil completo, forças, pontos cegos e caminho de crescimento</div>
+        </div>
+      </div>
+      <div class="chapter-row" style="border-left: 3px solid #4A6B8A;">
+        <div class="chapter-num" style="background:#4A6B8A; color:white;">5</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">◆ Melancólico — O Analista</div>
+          <div class="chapter-desc">Perfil completo, forças, pontos cegos e caminho de crescimento</div>
+        </div>
+      </div>
+      <div class="chapter-row" style="border-left: 3px solid #5A7A5A;">
+        <div class="chapter-num" style="background:#5A7A5A; color:white;">6</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">〜 Fleumático — O Pacificador</div>
+          <div class="chapter-desc">Perfil completo, forças, pontos cegos e caminho de crescimento</div>
+        </div>
+      </div>
+      <div class="chapter-row">
+        <div class="chapter-num">7</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">Temperamentos Mistos — Seu perfil real</div>
+          <div class="chapter-desc">As combinações mais comuns e o que elas dizem sobre você</div>
+        </div>
+      </div>
+      <div class="chapter-row">
+        <div class="chapter-num">8</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">Convivendo com os outros tipos</div>
+          <div class="chapter-desc">Como lidar com cada temperamento no dia a dia</div>
+        </div>
+      </div>
+      <div class="chapter-row" style="border-left: 3px solid var(--amber);">
+        <div class="chapter-num" style="background: linear-gradient(135deg,#C8842A,#C4614A); color:white;">✦</div>
+        <div class="chapter-info">
+          <div class="chapter-title-sm">Teste Rápido — Descubra seu temperamento</div>
+          <div class="chapter-desc">6 situações do dia a dia, resultado imediato</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PARA QUEM ──────────────────────────────────────────── -->
+<section class="paraquem">
+  <div class="container">
+    <span class="eyebrow">Para quem é</span>
+    <h2 class="section-title">Esse e-book é para você se...</h2>
+    <div class="divider"></div>
+
+    <div class="paraquem-grid">
+      <div class="paraquem-item">
+        <span class="paraquem-icon">🔍</span>
+        <strong>Você se repete</strong>
+        Vive os mesmos padrões e não entende por quê não consegue mudar.
+      </div>
+      <div class="paraquem-item">
+        <span class="paraquem-icon">💬</span>
+        <strong>Você tem conflitos</strong>
+        Se desgasta com pessoas que parecem funcionar de um jeito completamente diferente do seu.
+      </div>
+      <div class="paraquem-item">
+        <span class="paraquem-icon">🎯</span>
+        <strong>Você quer se conhecer</strong>
+        Sente que tem mais a descobrir sobre si mesmo além do que já sabe.
+      </div>
+      <div class="paraquem-item">
+        <span class="paraquem-icon">💡</span>
+        <strong>Você quer linguagem simples</strong>
+        Sem psicologia pesada, sem jargão — quer algo que faça sentido na vida real.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ──────────────────────────────────────────── -->
+<section class="cta-final">
+  <div class="container">
+    <span class="eyebrow" style="color:var(--amber-light);">Pronto para se entender?</span>
+    <h2 class="section-title">Comece agora.<br><em>Por apenas R$ 9,00.</em></h2>
+    <div class="divider"></div>
+
+    <div class="cta-box">
+      <p class="cta-price-label">Valor do e-book</p>
+      <p class="cta-price"><span>R$</span> 9<span>,00</span></p>
+      <p class="cta-price-desc">Acesso imediato • PDF completo • Leitura no celular ou computador</p>
+      <a href="https://pay.kiwify.com.br/VYlYxCI" class="btn-cta-final">🔓 Desbloquear minha análise completa</a>
+      <p class="cta-guarantee">🔒 Compra segura · Entrega imediata por e-mail · Acesso em menos de 1 minuto</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ORDER BUMP ─────────────────────────────────────────── -->
+<section class="ob-section">
+  <div class="container">
+    <div class="ob-box">
+      <div class="ob-badge">✦ Oferta especial — adicione antes de finalizar</div>
+
+      <div class="ob-inner">
+        <div class="ob-cover">
+          <span>Por Que<br>Meu Filho<br><em>É Assim?</em></span>
+        </div>
+
+        <div class="ob-content">
+          <h3 class="ob-title">Sim! Quero também <em>"Por Que Meu Filho É Assim?"</em></h3>
+          <p class="ob-desc">
+            Você acabou de descobrir o seu temperamento — agora imagine entender o do seu filho. 
+            Descubra como ele dorme, reage às birras, aprende e se socializa. 
+            Com um capítulo especial sobre o que fazer quando o temperamento do filho é oposto ao seu.
+          </p>
+          <div class="ob-price-row">
+            <span class="ob-original">R$ 9,00</span>
+            <span class="ob-new">R$ 4,90</span>
+            <span class="ob-tag">Só aqui</span>
+          </div>
+
+          <div class="ob-checkbox-row">
+            <div class="ob-checkbox" id="ob-check" onclick="toggleCheck()"></div>
+            <label class="ob-checkbox-label" for="ob-check" onclick="toggleCheck()">
+              <strong>Adicionar "Por Que Meu Filho É Assim?" por R$ 4,90</strong>
+              Essa oferta só aparece aqui. Não estará disponível depois.
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────── -->
+<footer>
+  <p>
+    © 2025 · Por Que Você É Assim? · Todos os direitos reservados.<br>
+    Este e-book é para fins educativos e de autoconhecimento.<br>
+    Não substitui acompanhamento psicológico ou terapêutico.
+  </p>
+</footer>
+
+<!-- ── STICKY CTA ─────────────────────────────────────────── -->
+<div class="sticky-cta" id="sticky">
+  <div class="sticky-label">
+    <strong>Por Que Você É Assim?</strong>
+    Análise completa do seu temperamento
+  </div>
+  <a href="https://pay.kiwify.com.br/VYlYxCI">🔓 R$ 9,00</a>
+</div>
+
+<script>
+  // Sticky CTA
+  const hero = document.querySelector('.hero');
+  const sticky = document.getElementById('sticky');
+  const observer = new IntersectionObserver(([e]) => {
+    sticky.classList.toggle('visible', !e.isIntersecting);
+  }, { threshold: 0 });
+  observer.observe(hero);
+
+  // OB checkbox
+  function toggleCheck() {
+    const box = document.getElementById('ob-check');
+    box.classList.toggle('checked');
+  }
+</script>
+</body>
+</html>
